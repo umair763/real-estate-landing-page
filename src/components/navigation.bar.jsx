@@ -23,25 +23,10 @@ export const NavigationBar = ({ transparent = false }) => {
     properties: [
       { name: "Buy", path: "/properties/buy" },
       { name: "Rent", path: "/properties/rent" },
-    ],
-    projects: [
-      { name: "New Projects", path: "/projects/new" },
-      { name: "Under Construction", path: "/projects/construction" },
-      { name: "Ready to Move", path: "/projects/ready" },
-      { name: "Payment Plans", path: "/projects/payment" },
+      { name: "Sell", path: "/sell" },
     ],
     invest: [
       { name: "Investment Plans", path: "/invest/plans" },
-      { name: "ROI Calculator", path: "/invest/calculator" },
-      { name: "Market Insights", path: "/invest/insights" },
-      { name: "Area Reports", path: "/invest/reports" },
-    ],
-    resources: [
-      { name: "Blog", path: "/resources/blog" },
-      { name: "Buying Guide", path: "/resources/buying" },
-      { name: "Renting Guide", path: "/resources/renting" },
-      { name: "Investment Guide", path: "/resources/investment" },
-      { name: "FAQs", path: "/resources/faqs" },
     ],
   };
 
@@ -86,39 +71,6 @@ export const NavigationBar = ({ transparent = false }) => {
             </AnimatePresence>
           </div>
 
-          {/* Projects Dropdown */}
-          <div
-            className="relative group"
-            onMouseEnter={() => handleMouseEnter("projects")}
-            onMouseLeave={handleMouseLeave}
-          >
-            <button className="flex items-center space-x-1 text-white/80 hover:text-white transition-colors">
-              <span>Projects</span>
-              <ChevronDown className="w-4 h-4" />
-            </button>
-            <AnimatePresence>
-              {openDropdown === "projects" && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute left-0 mt-2 w-48 bg-black/60 backdrop-blur-md border border-white/20 rounded-lg shadow-2xl py-2 z-50"
-                >
-                  {menuItems.projects.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.path}
-                      className="block px-4 py-2 text-white/90 hover:bg-white/20 hover:text-white transition-colors"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
           {/* Invest Dropdown */}
           <div
             className="relative group"
@@ -139,39 +91,6 @@ export const NavigationBar = ({ transparent = false }) => {
                   className="absolute left-0 mt-2 w-48 bg-black/60 backdrop-blur-md border border-white/20 rounded-lg shadow-2xl py-2 z-50"
                 >
                   {menuItems.invest.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.path}
-                      className="block px-4 py-2 text-white/90 hover:bg-white/20 hover:text-white transition-colors"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Resources Dropdown */}
-          <div
-            className="relative group"
-            onMouseEnter={() => handleMouseEnter("resources")}
-            onMouseLeave={handleMouseLeave}
-          >
-            <button className="flex items-center space-x-1 text-white/80 hover:text-white transition-colors">
-              <span>Resources</span>
-              <ChevronDown className="w-4 h-4" />
-            </button>
-            <AnimatePresence>
-              {openDropdown === "resources" && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute left-0 mt-2 w-48 bg-black/60 backdrop-blur-md border border-white/20 rounded-lg shadow-2xl py-2 z-50"
-                >
-                  {menuItems.resources.map((item) => (
                     <a
                       key={item.name}
                       href={item.path}
@@ -241,39 +160,6 @@ export const NavigationBar = ({ transparent = false }) => {
               </AnimatePresence>
             </div>
 
-            {/* Projects Dropdown */}
-            <div
-              className="relative group"
-              onMouseEnter={() => handleMouseEnter("projects")}
-              onMouseLeave={handleMouseLeave}
-            >
-              <button className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition-colors">
-                <span>Projects</span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
-              <AnimatePresence>
-                {openDropdown === "projects" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50"
-                  >
-                    {menuItems.projects.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.path}
-                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
             {/* Invest Dropdown */}
             <div
               className="relative group"
@@ -294,39 +180,6 @@ export const NavigationBar = ({ transparent = false }) => {
                     className="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50"
                   >
                     {menuItems.invest.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.path}
-                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Resources Dropdown */}
-            <div
-              className="relative group"
-              onMouseEnter={() => handleMouseEnter("resources")}
-              onMouseLeave={handleMouseLeave}
-            >
-              <button className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition-colors">
-                <span>Resources</span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
-              <AnimatePresence>
-                {openDropdown === "resources" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50"
-                  >
-                    {menuItems.resources.map((item) => (
                       <a
                         key={item.name}
                         href={item.path}
@@ -361,15 +214,7 @@ export const NavigationBar = ({ transparent = false }) => {
             <ChevronDown className="w-4 h-4" />
           </button>
           <button className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg flex justify-between items-center">
-            <span>Projects</span>
-            <ChevronDown className="w-4 h-4" />
-          </button>
-          <button className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg flex justify-between items-center">
             <span>Invest</span>
-            <ChevronDown className="w-4 h-4" />
-          </button>
-          <button className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg flex justify-between items-center">
-            <span>Resources</span>
             <ChevronDown className="w-4 h-4" />
           </button>
         </div>

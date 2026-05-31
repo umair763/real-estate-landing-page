@@ -103,7 +103,7 @@ export const QuickActions = () => {
       gradient: "from-orange-600/20 via-amber-500/20 to-yellow-400/20",
       glowColor: "rgba(251, 146, 60, 0.4)",
       image: "https://images.unsplash.com/photo-1560184897-ae75f418493e?q=80&w=800&auto=format&fit=crop",
-      route: "/projects/new"
+      route: "/properties/sell"
     },
     {
       title: "Invest",

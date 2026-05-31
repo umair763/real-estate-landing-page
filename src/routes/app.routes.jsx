@@ -3,10 +3,9 @@ import { MainLayout } from "../layout/main.layout";
 import { LandingPage } from "../pages/landing.page";
 import { AboutPage } from "../pages/about.page";
 import { ContactPage } from "../pages/contact.page";
-import { PropertiesPage } from "../pages/properties.page";
 import { BuyPage } from "../pages/buy.page";
 import { RentPage } from "../pages/rent.page";
-import { NewProjectsPage } from "../pages/new.projects.page";
+import { SellPage } from "../pages/sell.page";
 import { InvestmentPage } from "../pages/investment.page";
 
 export const appRoutes = createBrowserRouter([
@@ -35,14 +34,6 @@ export const appRoutes = createBrowserRouter([
     ),
   },
   {
-    path: "/properties",
-    element: (
-      <MainLayout>
-        <PropertiesPage />
-      </MainLayout>
-    ),
-  },
-  {
     path: "/properties/buy",
     element: (
       <MainLayout>
@@ -59,10 +50,10 @@ export const appRoutes = createBrowserRouter([
     ),
   },
   {
-    path: "/projects/new",
+    path: "/properties/sell",
     element: (
       <MainLayout>
-        <NewProjectsPage />
+        <SellPage />
       </MainLayout>
     ),
   },

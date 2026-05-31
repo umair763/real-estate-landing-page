@@ -5,10 +5,10 @@ import { PropertyCard } from "../components/property.card";
 import { MeshOverlay } from "../components/mesh.overlay";
 import { Pagination } from "../components/pagination";
 
-export const NewProjectsPage = () => {
+export const SellPage = () => {
   const [searchFilters, setSearchFilters] = useState({
     city: "",
-    completionStatus: "",
+    propertyType: "",
     budget: "",
     developer: "",
   });
@@ -16,7 +16,7 @@ export const NewProjectsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  const projects = [
+  const properties = [
     {
       id: 1,
       title: "Skyline Residences",
@@ -124,10 +124,10 @@ export const NewProjectsPage = () => {
     }
   ];
 
-  const totalPages = Math.ceil(projects.length / itemsPerPage);
+  const totalPages = Math.ceil(properties.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentProjects = projects.slice(startIndex, endIndex);
+  const currentProperties = properties.slice(startIndex, endIndex);
 
   return (
     <section className="relative min-h-screen py-24 px-6 overflow-hidden">
@@ -146,8 +146,8 @@ export const NewProjectsPage = () => {
           transition={{ duration: 0.8 }}
           className="bg-gradient-to-br from-zinc-800/80 to-black/80 backdrop-blur-xl rounded-3xl p-8 mb-12 border border-white/10 text-white"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">New Projects & Developments</h1>
-          <p className="text-gray-400 mb-6">Discover upcoming residential and commercial projects</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Sell Your Property</h1>
+          <p className="text-gray-400 mb-6">List your property and reach thousands of potential buyers</p>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 grid grid-cols-1 md:grid-cols-4 gap-4 border border-white/20">
             <div className="relative">
@@ -161,10 +161,11 @@ export const NewProjectsPage = () => {
               <MapPin className="absolute right-3 top-3 w-5 h-5 text-gray-400" />
             </div>
             <select className="px-4 py-3 bg-black/30 border border-white/20 rounded-lg text-white ">
-              <option value="">Completion Status</option>
-              <option>Under Construction</option>
-              <option>Near Completion</option>
-              <option>Ready to Move</option>
+              <option value="">Property Type</option>
+              <option>House</option>
+              <option>Apartment</option>
+              <option>Villa</option>
+              <option>Commercial</option>
             </select>
             <select className="px-4 py-3 bg-black/30 border border-white/20 rounded-lg text-white ">
               <option value="">Budget</option>
@@ -174,16 +175,16 @@ export const NewProjectsPage = () => {
               <option>$1M+</option>
             </select>
             <select className="px-4 py-3 bg-black/30 border border-white/20 rounded-lg text-white ">
-              <option value="">Developer</option>
-              <option>Elite Developers</option>
-              <option>Prime Construction</option>
-              <option>Oceanfront Properties</option>
+              <option value="">Status</option>
+              <option>Ready to Sell</option>
+              <option>Under Construction</option>
+              <option>Pre-launch</option>
             </select>
           </div>
           
           <button className="mt-4 w-full md:w-auto px-8 py-3 bg-white text-black rounded-lg font-semibold hover:bg-gray-200 transition-colors">
             <Search className="inline w-5 h-5 mr-2" />
-            Search Projects
+            Search Properties
           </button>
         </motion.div>
 
@@ -198,7 +199,7 @@ export const NewProjectsPage = () => {
               
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-3">Completion Status</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-3">Property Type</label>
                   <div className="space-y-2">
                     <label className="flex items-center group cursor-pointer">
                       <div className="relative">
@@ -208,7 +209,7 @@ export const NewProjectsPage = () => {
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <span className="text-sm text-gray-300 ml-3 group-hover:text-white transition-colors">Under Construction</span>
+                      <span className="text-sm text-gray-300 ml-3 group-hover:text-white transition-colors">House</span>
                     </label>
                     <label className="flex items-center group cursor-pointer">
                       <div className="relative">
@@ -218,7 +219,7 @@ export const NewProjectsPage = () => {
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <span className="text-sm text-gray-300 ml-3 group-hover:text-white transition-colors">Near Completion</span>
+                      <span className="text-sm text-gray-300 ml-3 group-hover:text-white transition-colors">Apartment</span>
                     </label>
                     <label className="flex items-center group cursor-pointer">
                       <div className="relative">
@@ -228,7 +229,7 @@ export const NewProjectsPage = () => {
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <span className="text-sm text-gray-300 ml-3 group-hover:text-white transition-colors">Ready to Move</span>
+                      <span className="text-sm text-gray-300 ml-3 group-hover:text-white transition-colors">Villa</span>
                     </label>
                   </div>
                 </div>
@@ -282,30 +283,30 @@ export const NewProjectsPage = () => {
             </div>
           </div>
 
-          {/* Project Listings */}
+          {/* Property Listings */}
           <div className="flex-1">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-white">Featured Projects</h2>
+              <h2 className="text-3xl font-bold text-white">Featured Properties</h2>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-gray-400">Sort by:</span>
                 <select className="px-3 py-2 bg-black/30 border border-white/20 rounded-lg text-sm text-white ">
                   <option>Latest</option>
-                  <option>Completion Date</option>
                   <option>Price Low → High</option>
                   <option>Price High → Low</option>
+                  <option>Most Viewed</option>
                 </select>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-              {currentProjects.map((project, index) => (
+              {currentProperties.map((property, index) => (
                 <motion.div
-                  key={project.id}
+                  key={property.id}
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <PropertyCard property={project} />
+                  <PropertyCard property={property} />
                 </motion.div>
               ))}
             </div>

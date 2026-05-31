@@ -2,6 +2,7 @@ import { useState, createContext, useContext } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Home, Key, TrendingUp, DollarSign } from "lucide-react";
+import { MeshOverlay } from "./mesh.overlay";
 import { cn } from "../lib/utils";
 
 const CardHoverRevealContext = createContext();
@@ -117,7 +118,8 @@ export const QuickActions = () => {
 
   return (
     <section className="relative min-h-screen w-full bg-black py-24 px-6 overflow-hidden">
-      <div className="absolute inset-0 bg-[#B3B3B3]" />
+      <div className="absolute inset-0 bg-[#555555]" />
+      <MeshOverlay opacity={0.15} />
       
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px]" />
@@ -131,10 +133,10 @@ export const QuickActions = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-7xl font-bold text-black mb-6 tracking-tight">
+          <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
             Quick Actions
           </h2>
-          <p className="text-xl text-black max-w-2xl mx-auto">
+          <p className="text-xl text-white max-w-2xl mx-auto">
             Your gateway to premium real estate experiences
           </p>
         </motion.div>
@@ -224,7 +226,7 @@ export const QuickActions = () => {
 
                     <Link to={action.route}>
                       <motion.button
-                        className="w-full mt-4 px-6 py-3 rounded-lg font-medium text-white relative overflow-hidden group/btn"
+                        className="w-full mt-4 px-6 py-3 rounded-lg font-medium text-white relative overflow-hidden group/btn cursor-pointer"
                         style={{
                           background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
                           border: "1px solid rgba(255,255,255,0.2)"
@@ -232,7 +234,7 @@ export const QuickActions = () => {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        <span className="relative z-10 cursor-pointer">Get Started</span>
+                        <span className="relative z-10">Get Started</span>
                         <div 
                           className="absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"
                           style={{

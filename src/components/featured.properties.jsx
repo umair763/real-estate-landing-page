@@ -1,7 +1,7 @@
 import { useState, useRef, createContext, useContext } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { cn } from "../lib/utils";
-import { MapPin, Bed, Bath, Square, CheckCircle2, Heart, Crown } from "lucide-react";
+import { MapPin, Bed, Bath, Square, CheckCircle2, Heart, Crown, ChevronLeft, ChevronRight } from "lucide-react";
 
 const CardHoverRevealContext = createContext();
 
@@ -186,10 +186,10 @@ const PropertyCard = ({ property }) => {
           </div>
         </div>
 
-        <motion.button
+        <motion.button 
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full bg-white text-black py-3 rounded-lg font-semibold shadow-lg hover:bg-white/90 transition-colors"
+          className="w-full bg-white text-black py-3 rounded-lg font-semibold shadow-lg hover:bg-white/90 transition-colors cursor-pointer"
         >
           View Details
         </motion.button>
@@ -207,6 +207,9 @@ export const FeaturedProperties = () => {
 
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   const properties = [
     {
@@ -279,14 +282,59 @@ export const FeaturedProperties = () => {
       verified: true,
       featured: true,
     },
+    {
+      id: 7,
+      title: "Mountain Retreat",
+      location: "Highland Valley",
+      price: "$950,000",
+      image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800",
+      beds: 3,
+      baths: 2,
+      sqft: "1,800",
+      verified: true,
+      featured: true,
+    },
+    {
+      id: 8,
+      title: "Urban Loft",
+      location: "Tech District",
+      price: "$580,000",
+      image: "https://images.unsplash.com/photo-1502672023488-70e25813eb30?w=800",
+      beds: 2,
+      baths: 2,
+      sqft: "1,200",
+      verified: true,
+    },
+    {
+      id: 9,
+      title: "Lakefront Estate",
+      location: "Lakeside Village",
+      price: "$2,400,000",
+      image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+      beds: 5,
+      baths: 4,
+      sqft: "4,100",
+      verified: true,
+      featured: true,
+    },
   ];
+
+  const totalPages = Math.ceil(properties.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentProperties = properties.slice(startIndex, endIndex);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: sectionRef.current.offsetTop - 100, behavior: 'smooth' });
+  };
 
   return (
     <section
       ref={sectionRef}
       className="relative min-h-screen bg-black py-24 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-[#B3B3B3]" />
+      <div className="absolute inset-0 bg-[#555555]" />
       <div
         className="absolute inset-0 opacity-30"
         style={{
@@ -313,7 +361,7 @@ export const FeaturedProperties = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl font-bold text-black"
+            className="text-5xl md:text-6xl font-bold text-white"
           >
             Featured Properties
           </motion.h2>
@@ -323,14 +371,14 @@ export const FeaturedProperties = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-black max-w-2xl mx-auto"
+            className="text-lg text-white max-w-2xl mx-auto"
           >
             Discover our handpicked selection of luxury properties in the most prestigious locations
           </motion.p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {properties.map((property, index) => (
+          {currentProperties.map((property, index) => (
             <motion.div
               key={property.id}
               initial={{ opacity: 0, y: 40 }}
@@ -347,21 +395,52 @@ export const FeaturedProperties = () => {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-16"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-white text-black px-8 py-4 rounded-xl font-semibold text-lg shadow-2xl hover:bg-white/90 transition-colors"
+        {/* Premium Pagination */}
+        {totalPages > 1 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex justify-center items-center gap-3 mt-12"
           >
-            View All Properties
-          </motion.button>
-        </motion.div>
+            <motion.button
+              whileHover={{ scale: 1.05, borderColor: "rgba(255,255,255,0.4)" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-4 h-12 bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl text-white hover:bg-black/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </motion.button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <motion.button
+                key={page}
+                whileHover={{ scale: 1.08, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handlePageChange(page)}
+                className={`w-12 h-12 rounded-xl font-semibold transition-all duration-300 cursor-pointer ${
+                  currentPage === page
+                    ? "bg-white text-black shadow-xl shadow-white/20 border-2 border-white"
+                    : "bg-black/40 backdrop-blur-sm border border-white/10 text-white hover:bg-black/60 hover:border-white/30"
+                }`}
+              >
+                {page}
+              </motion.button>
+            ))}
+
+            <motion.button
+              whileHover={{ scale: 1.05, borderColor: "rgba(255,255,255,0.4)" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-4 h-12 bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl text-white hover:bg-black/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </motion.button>
+          </motion.div>
+        )}
       </motion.div>
     </section>
   );

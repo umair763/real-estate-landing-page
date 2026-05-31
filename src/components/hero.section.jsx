@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Button } from "./ui/button";
+// import { Button } from "./ui/button";
 
 export const HeroSection = () => {
   return (
@@ -47,7 +47,7 @@ export const HeroSection = () => {
           Discover verified properties in 0% commission listings. Your trusted real estate partner for buying, renting, and investing.
         </motion.p>
 
-        <motion.div
+        {/* <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
@@ -65,7 +65,7 @@ export const HeroSection = () => {
           >
             Schedule Viewing
           </Button>
-        </motion.div>
+        </motion.div> */}
 
         {/* Stats Section */}
         <motion.div

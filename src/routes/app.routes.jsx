@@ -1,24 +1,77 @@
 import { createBrowserRouter } from "react-router-dom";
-import { LandingPage } from "../pages/landing";
-import { AboutPage } from "../pages/about";
-import { ContactPage } from "../pages/contact";
-import { PropertiesPage } from "../pages/properties";
+import { MainLayout } from "../layout/main.layout";
+import { LandingPage } from "../pages/landing.page";
+import { AboutPage } from "../pages/about.page";
+import { ContactPage } from "../pages/contact.page";
+import { PropertiesPage } from "../pages/properties.page";
+import { BuyPage } from "../pages/buy.page";
+import { RentPage } from "../pages/rent.page";
+import { NewProjectsPage } from "../pages/new.projects.page";
+import { InvestmentPage } from "../pages/investment.page";
 
 export const appRoutes = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage />,
+    element: (
+      <MainLayout>
+        <LandingPage />
+      </MainLayout>
+    ),
   },
   {
     path: "/about",
-    element: <AboutPage />,
+    element: (
+      <MainLayout>
+        <AboutPage />
+      </MainLayout>
+    ),
   },
   {
     path: "/contact",
-    element: <ContactPage />,
+    element: (
+      <MainLayout>
+        <ContactPage />
+      </MainLayout>
+    ),
   },
   {
     path: "/properties",
-    element: <PropertiesPage />,
+    element: (
+      <MainLayout>
+        <PropertiesPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/properties/buy",
+    element: (
+      <MainLayout>
+        <BuyPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/properties/rent",
+    element: (
+      <MainLayout>
+        <RentPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/projects/new",
+    element: (
+      <MainLayout>
+        <NewProjectsPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/invest/plans",
+    element: (
+      <MainLayout>
+        <InvestmentPage />
+      </MainLayout>
+    ),
   },
 ]);

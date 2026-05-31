@@ -1,7 +1,16 @@
-export const MainLayout = () => {
+import { NavigationBar } from "../components/navigation.bar";
+import { FooterSection } from "../components/footer.section";
+import { useLocation } from "react-router-dom";
+
+export const MainLayout = ({ children }) => {
+  const location = useLocation();
+  const isLandingPage = location.pathname === "/";
+
   return (
     <>
-      <h1>Main Layout</h1>
+      <NavigationBar transparent={isLandingPage} />
+      {children}
+      <FooterSection />
     </>
   );
 };

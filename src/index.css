@@ -1,1 +1,40 @@
 @import "tailwindcss";
+
+@theme {
+  /* Salt and Pepper Palette */
+  --color-cream: #f7e6ca;
+  --color-gold: #e8d59e;
+  --color-white: #ffffff;
+  --color-light-gray: #d4d4d4;
+  --color-medium-gray: #b3b3b3;
+  --color-dark-gray: #2b2b2b;
+  --color-charcoal: #464646;
+  --color-black: #000000;
+
+  /* Semantic Color Mapping */
+  --color-primary-bg: var(--color-white);
+  --color-secondary-bg: var(--color-cream);
+  --color-tertiary-bg: var(--color-light-gray);
+  --color-primary-text: var(--color-black);
+  --color-secondary-text: var(--color-dark-gray);
+  --color-tertiary-text: var(--color-charcoal);
+  --color-muted-text: var(--color-medium-gray);
+  --color-primary-accent: var(--color-gold);
+  --color-border: var(--color-light-gray);
+  --color-border-muted: var(--color-medium-gray);
+  --color-dark-section: var(--color-dark-gray);
+  --color-darkest-section: var(--color-black);
+  --color-dark-section-text: var(--color-white);
+  --color-dark-section-accent: var(--color-cream);
+}
+
+:root {
+  --color-cream: #f7e6ca;
+  --color-gold: #e8d59e;
+  --color-white: #ffffff;
+  --color-light-gray: #d4d4d4;
+  --color-medium-gray: #b3b3b3;
+  --color-dark-gray: #2b2b2b;
+  --color-charcoal: #464646;
+  --color-black: #000000;
+}

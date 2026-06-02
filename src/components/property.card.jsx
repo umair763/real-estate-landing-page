@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { cn } from "../lib/utils";
 import { MapPin, Bed, Bath, Square, CheckCircle2, Heart, Crown } from "lucide-react";
 import { createContext, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CardHoverRevealContext = createContext();
 
@@ -77,9 +78,9 @@ const CardHoverRevealContent = ({ className, ...props }) => {
 
 const Badge = ({ label, variant = "primary", size = "medium", icon, className }) => {
   const variantStyles = {
-    primary: "bg-black/60 text-white",
-    success: "bg-green-600 text-white",
-    warning: "bg-yellow-500 text-white",
+    primary: "bg-[#2B2B2B]/60 text-[#F7E6CA]",
+    success: "bg-[#464646]/60 text-[#F7E6CA]",
+    warning: "bg-[#E8D59E] text-[#000000]",
   };
 
   const sizeStyles = {
@@ -107,11 +108,16 @@ const Badge = ({ label, variant = "primary", size = "medium", icon, className })
 
 export const PropertyCard = ({ property }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    navigate(`/property/${property.id}`);
+  };
 
   return (
     <CardHoverReveal className="h-[500px] rounded-2xl group">
       <CardHoverRevealMain hoverScale={1.03}>
-        <div className="relative h-full w-full bg-gradient-to-br from-zinc-900 to-black rounded-2xl overflow-hidden">
+        <div className="relative h-full w-full rounded-2xl overflow-hidden">
           <div className="absolute inset-0 opacity-60">
             <img
               src={property.image}
@@ -120,18 +126,18 @@ export const PropertyCard = ({ property }) => {
             />
           </div>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/90 via-[#2B2B2B]/40 to-transparent" />
 
           {/* Top badges */}
           <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
             <div className="flex gap-2 items-center">
               {property.verified && (
-                <CheckCircle2 className="w-5 h-5 text-green-500" />
+                <CheckCircle2 className="w-5 h-5 text-[#E8D59E]" />
               )}
 
               {property.featured && (
                 <Crown
-                  className="w-5 h-5 text-yellow-500"
+                  className="w-5 h-5 text-[#E8D59E]"
                   fill="currentColor"
                 />
               )}
@@ -140,12 +146,12 @@ export const PropertyCard = ({ property }) => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsFavorite(!isFavorite)}
-              className="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-lg"
+              className="bg-[#D4D4D4]/90 backdrop-blur-sm p-2 rounded-full shadow-lg"
             >
               <Heart
                 className={cn(
                   "w-5 h-5 transition-colors",
-                  isFavorite ? "fill-red-500 text-red-500" : "text-gray-700"
+                  isFavorite ? "fill-[#E8D59E] text-[#E8D59E]" : "text-[#464646]"
                 )}
               />
             </motion.button>
@@ -163,25 +169,25 @@ export const PropertyCard = ({ property }) => {
         </div>
       </CardHoverRevealMain>
 
-      <CardHoverRevealContent className="space-y-4 rounded-2xl bg-black/90 backdrop-blur-xl border border-white/10">
+      <CardHoverRevealContent className="space-y-4 rounded-2xl bg-[#2B2B2B]/90 backdrop-blur-xl border border-[#D4D4D4]/10">
         <div className="space-y-2">
-          <h3 className="text-xl font-bold text-white">{property.title}</h3>
-          <div className="flex items-center gap-2 text-gray-300">
+          <h3 className="text-xl font-bold text-[#F7E6CA]">{property.title}</h3>
+          <div className="flex items-center gap-2 text-[#B3B3B3]">
             <MapPin className="w-4 h-4" />
             <p className="text-sm">{property.location}</p>
           </div>
         </div>
 
-        <div className="flex gap-4 pt-2 border-t border-white/10">
-          <div className="flex items-center gap-2 text-gray-300">
+        <div className="flex gap-4 pt-2 border-t border-[#D4D4D4]/10">
+          <div className="flex items-center gap-2 text-[#B3B3B3]">
             <Bed className="w-5 h-5" />
             <span className="text-sm font-medium">{property.beds} Beds</span>
           </div>
-          <div className="flex items-center gap-2 text-gray-300">
+          <div className="flex items-center gap-2 text-[#B3B3B3]">
             <Bath className="w-5 h-5" />
             <span className="text-sm font-medium">{property.baths} Baths</span>
           </div>
-          <div className="flex items-center gap-2 text-gray-300">
+          <div className="flex items-center gap-2 text-[#B3B3B3]">
             <Square className="w-5 h-5" />
             <span className="text-sm font-medium">{property.sqft} sqft</span>
           </div>
@@ -190,7 +196,8 @@ export const PropertyCard = ({ property }) => {
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full bg-white text-black py-3 rounded-lg font-semibold shadow-lg hover:bg-white/90 transition-colors cursor-pointer"
+          onClick={handleViewDetails}
+          className="w-full bg-[#E8D59E] text-[#000000] py-3 rounded-lg font-semibold shadow-lg hover:bg-[#F7E6CA] transition-colors cursor-pointer"
         >
           View Details
         </motion.button>

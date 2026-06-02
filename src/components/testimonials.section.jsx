@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { TestimonialsColumn } from "./testimonials.column";
-import { MeshOverlay } from "./mesh.overlay";
 
 const testimonials = [
   {
@@ -43,27 +42,37 @@ const testimonials = [
 
 export const TestimonialsSection = () => {
   return (
-    <section className="relative bg-[#555555] py-16 overflow-hidden max-h-[100vh]">
-      <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-black to-zinc-900" />
-      <MeshOverlay opacity={0.1} />
-      
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-[150px]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className="relative py-20 overflow-hidden" style={{ backgroundColor: '#2B2B2B' }}>
+      <div className="max-w-7xl max-h-[700px] mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+          <h2 
+            className="text-5xl md:text-6xl font-bold mb-6"
+            style={{ 
+              color: '#FFF',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              fontWeight: 360,
+              letterSpacing: '0.02em',
+              lineHeight: 1.1
+            }}
+          >
             What Our Clients Say
           </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+          <p 
+            className="text-lg max-w-2xl mx-auto"
+            style={{ 
+              color: '#FFFFFF',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              fontWeight: 400,
+              letterSpacing: '0.01em',
+              lineHeight: 1.5
+            }}
+          >
             Hear from thousands of satisfied customers who found their perfect property with EstatePro
           </p>
         </motion.div>

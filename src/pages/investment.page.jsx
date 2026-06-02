@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Calculator,
@@ -10,8 +10,8 @@ import {
   Building2,
 } from "lucide-react";
 import { PropertyCard } from "../components/property.card";
-import { MeshOverlay } from "../components/mesh.overlay";
 import { Pagination } from "../components/pagination";
+import { propertyService } from "../services/property.service";
 
 export const InvestmentPage = () => {
   const [roiInputs, setRoiInputs] = useState({
@@ -23,7 +23,43 @@ export const InvestmentPage = () => {
 
   const [calculatedRoi, setCalculatedRoi] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
   const itemsPerPage = 6;
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        setLoading(true);
+        const data = await propertyService.getPropertiesByCategory('invest');
+        const formattedProperties = data.map(propertyService.formatPropertyForCard);
+        setProperties(formattedProperties);
+      } catch (err) {
+        console.error('Error fetching properties:', err);
+        setProperties([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
+  const totalPages = Math.ceil(properties.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentOpportunities = properties.slice(startIndex, endIndex);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#B3B3B3' }}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto" style={{ borderColor: '#2B2B2B' }}></div>
+          <p className="mt-4" style={{ color: '#B3B3B3' }}>Loading properties...</p>
+        </div>
+      </div>
+    );
+  }
 
   const calculateROI = () => {
     const investment = parseFloat(roiInputs.investmentAmount);
@@ -46,156 +82,54 @@ export const InvestmentPage = () => {
     }
   };
 
-  const opportunities = [
-    {
-      id: 1,
-      title: "Downtown Commercial Tower",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800",
-      price: "12% ROI",
-      location: "Downtown District",
-      beds: 0,
-      baths: 0,
-      sqft: "50,000",
-      verified: true,
-      featured: true
-    },
-    {
-      id: 2,
-      title: "Suburban Residential Complex",
-      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
-      price: "10% ROI",
-      location: "Suburban Area",
-      beds: 0,
-      baths: 0,
-      sqft: "25,000",
-      verified: true,
-      featured: true
-    },
-    {
-      id: 3,
-      title: "Coastal Land Development",
-      image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800",
-      price: "18% ROI",
-      location: "Coastal Road",
-      beds: 0,
-      baths: 0,
-      sqft: "100,000",
-      verified: true,
-      featured: true
-    },
-    {
-      id: 4,
-      title: "Mixed-Use Development",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800",
-      price: "15% ROI",
-      location: "City Center",
-      beds: 0,
-      baths: 0,
-      sqft: "75,000",
-      verified: true
-    },
-    {
-      id: 5,
-      title: "Industrial Park",
-      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
-      price: "11% ROI",
-      location: "Industrial Zone",
-      beds: 0,
-      baths: 0,
-      sqft: "200,000",
-      verified: true
-    },
-    {
-      id: 6,
-      title: "Luxury Resort",
-      image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800",
-      price: "20% ROI",
-      location: "Beachfront",
-      beds: 0,
-      baths: 0,
-      sqft: "150,000",
-      verified: true,
-      featured: true
-    },
-    {
-      id: 7,
-      title: "Tech Hub Campus",
-      image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800",
-      price: "14% ROI",
-      location: "Tech District",
-      beds: 0,
-      baths: 0,
-      sqft: "80,000",
-      verified: true,
-      featured: true
-    },
-    {
-      id: 8,
-      title: "Retail Complex",
-      image: "https://images.unsplash.com/photo-1502672023488-70e25813eb30?w=800",
-      price: "13% ROI",
-      location: "Shopping District",
-      beds: 0,
-      baths: 0,
-      sqft: "60,000",
-      verified: true
-    },
-    {
-      id: 9,
-      title: "Warehouse Distribution",
-      image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-      price: "16% ROI",
-      location: "Logistics Zone",
-      beds: 0,
-      baths: 0,
-      sqft: "120,000",
-      verified: true,
-      featured: true
-    }
-  ];
-
-  const totalPages = Math.ceil(opportunities.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentOpportunities = opportunities.slice(startIndex, endIndex);
-
   return (
-    <section className="relative min-h-screen bg-[#555555] py-24 px-6 overflow-hidden">
-      <div className="absolute inset-0 bg-[#555555]" />
-      <MeshOverlay opacity={0.15} />
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-600/10 rounded-full blur-[120px]" />
-      </div>
-
+    <section className="relative min-h-screen py-24 px-6" style={{ backgroundColor: '#D4D4D4' }}>
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Hero Section */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="bg-gradient-to-br from-zinc-800/80 to-black/80 backdrop-blur-xl rounded-3xl p-8 mb-12 border border-white/10 text-white"
+          className="rounded-2xl p-8 mb-12"
+          style={{ backgroundColor: '#F7E6CA', border: '1px solid #D4D4D4' }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          <h1 
+            className="text-4xl md:text-5xl font-bold mb-4"
+            style={{ 
+              color: '#1a1a1a',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              fontWeight: 500,
+              letterSpacing: '-0.03em'
+            }}
+          >
             Investment Opportunities
           </h1>
-          <p className="text-gray-400 mb-6">
+          <p className="mb-6" style={{ color: '#a3a3a3' }}>
             Maximize your returns with data-driven real estate investments
           </p>
-        </motion.div>
+        </motion.div> */}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
           {/* ROI Calculator */}
           <div className="lg:col-span-1">
-            <div className="bg-gradient-to-br from-zinc-800/80 to-black/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 sticky top-20">
+            <div className="rounded-2xl p-6 sticky top-20" style={{ backgroundColor: '#F7E6CA', border: '1px solid #D4D4D4' }}>
               <div className="flex items-center gap-2 mb-4">
-                <Calculator className="w-6 h-6 text-amber-400" />
-                <h3 className="font-semibold text-white">ROI Calculator</h3>
+                <Calculator className="w-6 h-6" style={{ color: '#E8D59E' }} />
+                <h3 
+                  className="font-semibold"
+                  style={{ 
+                    color: '#000000',
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    fontWeight: 500
+                  }}
+                >
+                  ROI Calculator
+                </h3>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#000000' }}>
                     Investment Amount ($)
                   </label>
                   <input
@@ -205,12 +139,17 @@ export const InvestmentPage = () => {
                       setRoiInputs({ ...roiInputs, investmentAmount: e.target.value })
                     }
                     placeholder="100000"
-                    className="w-full px-4 py-2 bg-black/30 border border-white/20 rounded-lg text-white placeholder-gray-400 "
+                    className="w-full px-4 py-2 rounded-lg"
+                    style={{ 
+                      backgroundColor: 'rgba(43, 43, 43, 0.05)',
+                      border: '1px solid #D4D4D4',
+                      color: '#000000'
+                    }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#000000' }}>
                     Expected Appreciation (%)
                   </label>
                   <input
@@ -220,12 +159,17 @@ export const InvestmentPage = () => {
                       setRoiInputs({ ...roiInputs, expectedAppreciation: e.target.value })
                     }
                     placeholder="10"
-                    className="w-full px-4 py-2 bg-black/30 border border-white/20 rounded-lg text-white placeholder-gray-400 "
+                    className="w-full px-4 py-2 rounded-lg"
+                    style={{ 
+                      backgroundColor: 'rgba(43, 43, 43, 0.05)',
+                      border: '1px solid #D4D4D4',
+                      color: '#000000'
+                    }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#000000' }}>
                     Rental Yield (%)
                   </label>
                   <input
@@ -235,12 +179,17 @@ export const InvestmentPage = () => {
                       setRoiInputs({ ...roiInputs, rentalYield: e.target.value })
                     }
                     placeholder="5"
-                    className="w-full px-4 py-2 bg-black/30 border border-white/20 rounded-lg text-white placeholder-gray-400 "
+                    className="w-full px-4 py-2 rounded-lg"
+                    style={{ 
+                      backgroundColor: 'rgba(43, 43, 43, 0.05)',
+                      border: '1px solid #D4D4D4',
+                      color: '#000000'
+                    }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#000000' }}>
                     Investment Horizon (Years)
                   </label>
                   <input
@@ -250,44 +199,61 @@ export const InvestmentPage = () => {
                       setRoiInputs({ ...roiInputs, investmentHorizon: e.target.value })
                     }
                     placeholder="5"
-                    className="w-full px-4 py-2 bg-black/30 border border-white/20 rounded-lg text-white placeholder-gray-400 "
+                    className="w-full px-4 py-2 rounded-lg"
+                    style={{ 
+                      backgroundColor: 'rgba(43, 43, 43, 0.05)',
+                      border: '1px solid #D4D4D4',
+                      color: '#000000'
+                    }}
                   />
                 </div>
 
                 <button
                   onClick={calculateROI}
-                  className="w-full py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-700 transition-colors"
+                  className="w-full py-3 font-semibold transition-colors rounded-lg"
+                  style={{ 
+                    backgroundColor: '#E8D59E',
+                    color: '#000000',
+                    borderRadius: '10px'
+                  }}
                 >
                   Calculate Returns
                 </button>
 
                 {calculatedRoi && (
-                  <div className="mt-4 p-4 bg-amber-900/20 rounded-lg border border-amber-500/30">
-                    <h4 className="font-semibold text-white mb-3">
+                  <div className="mt-4 p-4 rounded-lg" style={{ backgroundColor: '#FFFFFF', border: '1px solid #D4D4D4' }}>
+                    <h4 
+                      className="font-semibold mb-3"
+                      style={{ 
+                        color: '#000000',
+                        fontFamily: 'system-ui, -apple-system, sans-serif',
+                        fontWeight: 500
+                      }}
+                    >
                       Projected Returns
                     </h4>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-gray-400">Future Value:</span>
-                        <span className="font-semibold text-white">
+                        <span style={{ color: '#B3B3B3' }}>Future Value:</span>
+                        <span className="font-semibold" style={{ color: '#000000' }}>
                           ${calculatedRoi.futureValue}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-400">Total Rental Income:</span>
-                        <span className="font-semibold text-white">
+                        <span style={{ color: '#B3B3B3' }}>Total Rental Income:</span>
+                        <span className="font-semibold" style={{ color: '#000000' }}>
                           ${calculatedRoi.totalRentalIncome}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-400">Total Return:</span>
-                        <span className="font-semibold text-green-400">
+                        <span style={{ color: '#B3B3B3' }}>Total Return:</span>
+                        <span className="font-semibold" style={{ color: '#000000' }}>
                           ${calculatedRoi.totalReturn}
                         </span>
                       </div>
-                      <div className="flex justify-between border-t border-white/10 pt-2 mt-2">
-                        <span className="text-white font-medium">ROI:</span>
-                        <span className="font-bold text-amber-400">
+                      <div className="flex justify-between pt-2 mt-2" style={{ borderTop: '1px solid #D4D4D4' }}>
+                        <span className="font-medium" style={{ color: '#000000' }}>ROI:</span>
+                        <span className="font-bold" style={{ color: '#E8D59E' }}>
                           {calculatedRoi.roiPercent}%
                         </span>
                       </div>
@@ -301,10 +267,24 @@ export const InvestmentPage = () => {
           {/* Investment Opportunities */}
           <div className="lg:col-span-2">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-white">Featured Opportunities</h2>
+              <h2 
+                className="text-3xl font-bold"
+                style={{ 
+                  color: '#000000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  fontWeight: 500,
+                  letterSpacing: '-0.03em'
+                }}
+              >
+                Featured Opportunities
+              </h2>
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-400">Category:</span>
-                <select className="px-3 py-2 bg-black/30 border border-white/20 rounded-lg text-sm text-white">
+                <span className="text-sm" style={{ color: '#B3B3B3' }}>Category:</span>
+                <select className="px-3 py-2 rounded-lg text-sm" style={{ 
+                  backgroundColor: 'rgba(43, 43, 43, 0.05)',
+                  border: '1px solid #D4D4D4',
+                  color: '#000000'
+                }}>
                   <option>All</option>
                   <option>Residential</option>
                   <option>Commercial</option>
@@ -334,7 +314,15 @@ export const InvestmentPage = () => {
 
             {/* Investment Categories */}
             <div className="mt-12">
-              <h3 className="text-2xl font-bold text-white mb-6">
+              <h3 
+                className="text-2xl font-bold mb-6"
+                style={{ 
+                  color: '#000000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  fontWeight: 500,
+                  letterSpacing: '-0.03em'
+                }}
+              >
                 Investment Categories
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -342,11 +330,21 @@ export const InvestmentPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className="bg-gradient-to-br from-zinc-800/80 to-black/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 text-center hover:border-white/20 transition-colors"
+                  className="rounded-2xl p-6 text-center transition-colors"
+                  style={{ backgroundColor: '#F7E6CA', border: '1px solid #D4D4D4' }}
                 >
-                  <Building2 className="w-12 h-12 text-blue-400 mx-auto mb-3" />
-                  <h4 className="font-semibold text-white mb-2">Residential</h4>
-                  <p className="text-sm text-gray-400">
+                  <Building2 className="w-12 h-12 mx-auto mb-3" style={{ color: '#E8D59E' }} />
+                  <h4 
+                    className="font-semibold mb-2"
+                    style={{ 
+                      color: '#000000',
+                      fontFamily: 'system-ui, -apple-system, sans-serif',
+                      fontWeight: 500
+                    }}
+                  >
+                    Residential
+                  </h4>
+                  <p className="text-sm" style={{ color: '#a3a3a3' }}>
                     Steady rental income with moderate appreciation
                   </p>
                 </motion.div>
@@ -354,11 +352,21 @@ export const InvestmentPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="bg-gradient-to-br from-zinc-800/80 to-black/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 text-center hover:border-white/20 transition-colors"
+                  className="rounded-2xl p-6 text-center transition-colors"
+                  style={{ backgroundColor: '#F7E6CA', border: '1px solid #D4D4D4' }}
                 >
-                  <PieChart className="w-12 h-12 text-purple-400 mx-auto mb-3" />
-                  <h4 className="font-semibold text-white mb-2">Commercial</h4>
-                  <p className="text-sm text-gray-400">
+                  <PieChart className="w-12 h-12 mx-auto mb-3" style={{ color: '#E8D59E' }} />
+                  <h4 
+                    className="font-semibold mb-2"
+                    style={{ 
+                      color: '#000000',
+                      fontFamily: 'system-ui, -apple-system, sans-serif',
+                      fontWeight: 500
+                    }}
+                  >
+                    Commercial
+                  </h4>
+                  <p className="text-sm" style={{ color: '#a3a3a3' }}>
                     Higher yields with longer lease terms
                   </p>
                 </motion.div>
@@ -366,11 +374,21 @@ export const InvestmentPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
-                  className="bg-gradient-to-br from-zinc-800/80 to-black/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 text-center hover:border-white/20 transition-colors"
+                  className="rounded-2xl p-6 text-center transition-colors"
+                  style={{ backgroundColor: '#F7E6CA', border: '1px solid #D4D4D4' }}
                 >
-                  <Target className="w-12 h-12 text-green-400 mx-auto mb-3" />
-                  <h4 className="font-semibold text-white mb-2">Land</h4>
-                  <p className="text-sm text-gray-400">
+                  <Target className="w-12 h-12 mx-auto mb-3" style={{ color: '#E8D59E' }} />
+                  <h4 
+                    className="font-semibold mb-2"
+                    style={{ 
+                      color: '#000000',
+                      fontFamily: 'system-ui, -apple-system, sans-serif',
+                      fontWeight: 500
+                    }}
+                  >
+                    Land
+                  </h4>
+                  <p className="text-sm" style={{ color: '#a3a3a3' }}>
                     High growth potential for development
                   </p>
                 </motion.div>
@@ -384,42 +402,79 @@ export const InvestmentPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="bg-gradient-to-br from-zinc-800/80 to-black/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10"
+          className="rounded-2xl p-6"
+          style={{ backgroundColor: '#F7E6CA', border: '1px solid #D4D4D4' }}
         >
           <div className="flex items-center gap-2 mb-4">
-            <Shield className="w-6 h-6 text-amber-400" />
-            <h3 className="font-semibold text-white">Investment Risk Analysis</h3>
+            <Shield className="w-6 h-6" style={{ color: '#E8D59E' }} />
+            <h3 
+              className="font-semibold"
+              style={{ 
+                color: '#000000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                fontWeight: 500
+              }}
+            >
+              Investment Risk Analysis
+            </h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex items-start gap-3">
-              <div className="bg-green-900/30 p-2 rounded-lg border border-green-500/30">
-                <Shield className="w-5 h-5 text-green-400" />
+              <div className="p-2 rounded-lg" style={{ backgroundColor: '#FFFFFF', border: '1px solid #D4D4D4' }}>
+                <Shield className="w-5 h-5" style={{ color: '#000000' }} />
               </div>
               <div>
-                <h4 className="font-semibold text-white">Low Risk</h4>
-                <p className="text-sm text-gray-400">
+                <h4 
+                  className="font-semibold"
+                  style={{ 
+                    color: '#000000',
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    fontWeight: 500
+                  }}
+                >
+                  Low Risk
+                </h4>
+                <p className="text-sm" style={{ color: '#a3a3a3' }}>
                   Established areas with stable demand
                 </p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="bg-yellow-900/30 p-2 rounded-lg border border-yellow-500/30">
-                <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <div className="p-2 rounded-lg" style={{ backgroundColor: '#FFFFFF', border: '1px solid #D4D4D4' }}>
+                <AlertTriangle className="w-5 h-5" style={{ color: '#000000' }} />
               </div>
               <div>
-                <h4 className="font-semibold text-white">Medium Risk</h4>
-                <p className="text-sm text-gray-400">
+                <h4 
+                  className="font-semibold"
+                  style={{ 
+                    color: '#000000',
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    fontWeight: 500
+                  }}
+                >
+                  Medium Risk
+                </h4>
+                <p className="text-sm" style={{ color: '#a3a3a3' }}>
                   Developing areas with growth potential
                 </p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="bg-red-900/30 p-2 rounded-lg border border-red-500/30">
-                <TrendingUp className="w-5 h-5 text-red-400" />
+              <div className="p-2 rounded-lg" style={{ backgroundColor: '#FFFFFF', border: '1px solid #D4D4D4' }}>
+                <TrendingUp className="w-5 h-5" style={{ color: '#000000' }} />
               </div>
               <div>
-                <h4 className="font-semibold text-white">High Growth</h4>
-                <p className="text-sm text-gray-400">
+                <h4 
+                  className="font-semibold"
+                  style={{ 
+                    color: '#000000',
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    fontWeight: 500
+                  }}
+                >
+                  High Growth
+                </h4>
+                <p className="text-sm" style={{ color: '#a3a3a3' }}>
                   Emerging markets with higher returns
                 </p>
               </div>

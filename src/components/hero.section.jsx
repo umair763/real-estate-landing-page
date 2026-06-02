@@ -10,8 +10,8 @@ export const HeroSection = () => {
         style={{ backgroundImage: `url("https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&auto=format&fit=crop&q=80")` }}
       >
         {/* Overlay Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2B2B2B]/70 via-[#2B2B2B]/50 to-[#000000]/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#2B2B2B]/60 via-transparent to-[#2B2B2B]/60" />
       </div>
 
       {/* Noise Texture */}
@@ -76,15 +76,15 @@ export const HeroSection = () => {
         >
           <div className="flex flex-col items-center">
             <div className="text-3xl md:text-4xl font-bold text-white mb-2">10K+</div>
-            <div className="text-sm md:text-base text-white/70">Verified Listings</div>
+            <div className="text-sm md:text-base text-[#B3B3B3]/70">Verified Listings</div>
           </div>
           <div className="flex flex-col items-center">
             <div className="text-3xl md:text-4xl font-bold text-white mb-2">5K+</div>
-            <div className="text-sm md:text-base text-white/70">Happy Clients</div>
+            <div className="text-sm md:text-base text-[#B3B3B3]/70">Happy Clients</div>
           </div>
           <div className="flex flex-col items-center">
             <div className="text-3xl md:text-4xl font-bold text-white mb-2">500+</div>
-            <div className="text-sm md:text-base text-white/70">Locations</div>
+            <div className="text-sm md:text-base text-[#B3B3B3]/70">Locations</div>
           </div>
         </motion.div>
       </motion.div>
@@ -101,12 +101,12 @@ export const HeroSection = () => {
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           className="flex flex-col items-center gap-2"
         >
-          <span className="text-xs text-white/60 uppercase tracking-wider">Scroll</span>
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
+          <span className="text-xs text-[#B3B3B3]/60 uppercase tracking-wider">Scroll</span>
+          <div className="w-6 h-10 border-2 border-[#D4D4D4]/30 rounded-full flex items-start justify-center p-2">
             <motion.div
               animate={{ y: [0, 12, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-1.5 h-1.5 bg-white/60 rounded-full"
+              className="w-1.5 h-1.5 bg-[#B3B3B3]/60 rounded-full"
             />
           </div>
         </motion.div>

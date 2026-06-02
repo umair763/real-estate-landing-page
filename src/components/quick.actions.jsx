@@ -82,8 +82,8 @@ export const QuickActions = () => {
       title: "Buy",
       description: "Find your dream property with our extensive listings and expert guidance",
       icon: <Home className="w-6 h-6" />,
-      gradient: "from-blue-600/20 via-cyan-500/20 to-teal-400/20",
-      glowColor: "rgba(56, 189, 248, 0.4)",
+      gradient: "from-[#E8D59E]/20 via-[#F7E6CA]/20 to-[#D4D4D4]/20",
+      glowColor: "rgba(232, 213, 158, 0.4)",
       image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop",
       route: "/properties/buy"
     },
@@ -91,8 +91,8 @@ export const QuickActions = () => {
       title: "Rent",
       description: "Discover flexible rental options tailored to your lifestyle and budget",
       icon: <Key className="w-6 h-6" />,
-      gradient: "from-purple-600/20 via-pink-500/20 to-rose-400/20",
-      glowColor: "rgba(168, 85, 247, 0.4)",
+      gradient: "from-[#E8D59E]/20 via-[#F7E6CA]/20 to-[#D4D4D4]/20",
+      glowColor: "rgba(232, 213, 158, 0.4)",
       image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=800&auto=format&fit=crop",
       route: "/properties/rent"
     },
@@ -100,8 +100,8 @@ export const QuickActions = () => {
       title: "Sell",
       description: "Maximize your property value with our proven marketing strategies",
       icon: <TrendingUp className="w-6 h-6" />,
-      gradient: "from-orange-600/20 via-amber-500/20 to-yellow-400/20",
-      glowColor: "rgba(251, 146, 60, 0.4)",
+      gradient: "from-[#E8D59E]/20 via-[#F7E6CA]/20 to-[#D4D4D4]/20",
+      glowColor: "rgba(232, 213, 158, 0.4)",
       image: "https://images.unsplash.com/photo-1560184897-ae75f418493e?q=80&w=800&auto=format&fit=crop",
       route: "/properties/sell"
     },
@@ -109,21 +109,21 @@ export const QuickActions = () => {
       title: "Invest",
       description: "Build wealth through strategic real estate investment opportunities",
       icon: <DollarSign className="w-6 h-6" />,
-      gradient: "from-emerald-600/20 via-green-500/20 to-lime-400/20",
-      glowColor: "rgba(52, 211, 153, 0.4)",
+      gradient: "from-[#E8D59E]/20 via-[#F7E6CA]/20 to-[#D4D4D4]/20",
+      glowColor: "rgba(232, 213, 158, 0.4)",
       image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop",
       route: "/invest/plans"
     }
   ];
 
   return (
-    <section className="relative min-h-screen w-full bg-black py-24 px-6 overflow-hidden">
-      <div className="absolute inset-0 bg-[#555555]" />
+    <section className="relative min-h-screen w-full bg-[#464646] py-24 px-6 overflow-hidden">
+      <div className="absolute inset-0 bg-[#2B2B2B]" />
       <MeshOverlay opacity={0.15} />
       
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px]" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#E8D59E]/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#F7E6CA]/10 rounded-full blur-[120px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
@@ -149,9 +149,9 @@ export const QuickActions = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <CardHoverReveal className="h-[600px] rounded-2xl group">
+              <CardHoverReveal className="h-[450px] rounded-2xl group">
                 <CardHoverRevealMain hoverScale={1.03}>
-                  <div className="relative h-full w-full bg-gradient-to-br from-zinc-900 to-black rounded-2xl overflow-hidden">
+                  <div className="relative h-full w-full bg-gradient-to-br from-[#2B2B2B] to-[#000000] rounded-2xl overflow-hidden">
                     <div className="absolute inset-0 opacity-40">
                       <img
                         src={action.image}
@@ -172,26 +172,26 @@ export const QuickActions = () => {
                       }}
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 via-[#2B2B2B]/20 to-transparent" />
 
                     <div className="relative h-full flex flex-col p-8">
                       <motion.div
                         className="w-14 h-14 rounded-xl flex items-center justify-center mb-auto"
                         style={{
-                          background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
+                          background: "linear-gradient(135deg, rgba(247, 230, 202, 0.1) 0%, rgba(247, 230, 202, 0.05) 100%)",
                           backdropFilter: "blur(10px)",
-                          border: "1px solid rgba(255,255,255,0.1)"
+                          border: "1px solid rgba(212, 212, 212, 0.2)"
                         }}
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <div className="text-white">
+                        <div className="text-[#F7E6CA]">
                           {action.icon}
                         </div>
                       </motion.div>
 
                       <div className="mt-auto">
-                        <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">
+                        <h3 className="text-3xl font-bold text-[#F7E6CA] mb-2 tracking-tight">
                           {action.title}
                         </h3>
                       </div>
@@ -209,27 +209,27 @@ export const QuickActions = () => {
                   </div>
                 </CardHoverRevealMain>
 
-                <CardHoverRevealContent className="rounded-2xl bg-black/90 backdrop-blur-xl border border-white/10">
+                <CardHoverRevealContent className="rounded-2xl bg-[#2B2B2B]/90 backdrop-blur-xl border border-[#D4D4D4]/10">
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <div className="text-white">
+                      <div className="text-[#F7E6CA]">
                         {action.icon}
                       </div>
-                      <h4 className="text-xl font-semibold text-white">
+                      <h4 className="text-xl font-semibold text-[#F7E6CA]">
                         {action.title}
                       </h4>
                     </div>
                     
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    <p className="text-[#B3B3B3] text-sm leading-relaxed">
                       {action.description}
                     </p>
 
                     <Link to={action.route}>
                       <motion.button
-                        className="w-full mt-4 px-6 py-3 rounded-lg font-medium text-white relative overflow-hidden group/btn cursor-pointer"
+                        className="w-full mt-4 px-6 py-3 rounded-lg font-medium text-[#F7E6CA] relative overflow-hidden group/btn cursor-pointer"
                         style={{
-                          background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
-                          border: "1px solid rgba(255,255,255,0.2)"
+                          background: "linear-gradient(135deg, rgba(247, 230, 202, 0.1) 0%, rgba(247, 230, 202, 0.05) 100%)",
+                          border: "1px solid rgba(212, 212, 212, 0.2)"
                         }}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
